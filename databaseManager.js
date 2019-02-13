@@ -59,16 +59,21 @@ module.exports.deleteItem = itemId => {
 	return dynamo.delete(params).promise();
 };
 
-module.exports.updateItem = (itemId, paramsName, paramsValue) => {
+module.exports.updateItem = (itemId,body) => {
+
 	const params = {
 		TableName: TABLE_NAME,
 		Key: {
 			itemId
 		},
 		ConditionExpression: 'attribute_exists(itemId)',
-		UpdateExpression: 'set ' + paramsName + ' = :v',
+		UpdateExpression: 'set campo=:c, campo1=:c1, campo2=:c2, createdAt=:cAt, updatedAt=:uAt',
 		ExpressionAttributeValues: {
-			':v': paramsValue
+			":c": body.campo,
+			":c1": body.campo1,
+			":c2": body.campo2,
+			":cAt": body.createdAt,
+			":uAt": body.updatedAt
 		},
 		ReturnValues: 'ALL_NEW'
 	};

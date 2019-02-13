@@ -25,9 +25,13 @@ exports.servicesOrders = (event, context, callback) => {
 };
 
 function saveItem(event, callback) {
-	const item = JSON.parse(event.body);
 
+	const timestamp = new Date().getTime();
+	const item = JSON.parse(event.body);
 	item.itemId = uuidv1();
+	item.createdAt= timestamp;
+	item.updatedAt= timestamp;
+
 
 	databaseManager.saveItem(item).then(response => {
 		console.log(response);
@@ -62,15 +66,20 @@ function deleteItem(event, callback) {
 }
 
 function updateItem(event, callback) {
+	const timestamp = new Date().getTime();
 	const itemId = event.pathParameters.itemId;
-
 	const body = JSON.parse(event.body);
-	const paramName = body.paramName;
-	const paramValue = body.paramValue;
+	const serviceOrder = {
+		campo : body.campo,
+		campo1: body.campo1,
+		campo2: body.campo2,
+		createdAt: body.createdAt,
+		updatedAt: timestamp
+	};
 
-	databaseManager.updateItem(itemId, paramName, paramValue).then(response => {
+	databaseManager.updateItem(itemId, serviceOrder).then(response => {
 		console.log(response);
-		sendResponse(200, JSON.stringify(response), callback);
+		sendResponse(200, 'SO Updated', callback);
 	});
 }
 
