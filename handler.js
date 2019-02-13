@@ -70,9 +70,9 @@ function updateItem(event, callback) {
 	const itemId = event.pathParameters.itemId;
 	const body = JSON.parse(event.body);
 	const serviceOrder = {
-		campo : body.campo,
-		campo1: body.campo1,
-		campo2: body.campo2,
+		orderNumber : body.orderNumber,
+		orderDate: body.orderDate,
+		endDate: body.endDate,
 		createdAt: body.createdAt,
 		updatedAt: timestamp
 	};

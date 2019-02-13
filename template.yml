@@ -28,7 +28,7 @@ Resources:
                     - Ref: 'AWS::Region'
                     - ':'
                     - Ref: 'AWS::AccountId'
-                    - ':table/myServiceOrderTable'
+                    - ':table/SamServiceOrder'
       Events:
         Api1:
           Type: Api
@@ -45,10 +45,10 @@ Resources:
           Properties:
             Path: /serviceorder/{itemId}
             Method: ANY
-  myServiceOrderTable:
+  SamServiceOrder:
     Type: 'AWS::DynamoDB::Table'
     Properties:
-      TableName: myServiceOrderTable
+      TableName: SamServiceOrder
       AttributeDefinitions:
         - AttributeName: itemId
           AttributeType: S

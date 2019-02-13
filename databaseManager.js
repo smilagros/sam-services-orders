@@ -3,7 +3,7 @@
 const AWS = require('aws-sdk');
 let dynamo = new AWS.DynamoDB.DocumentClient();
 
-const TABLE_NAME = 'myServiceOrderTable';
+const TABLE_NAME = 'SamServiceOrder';
 
 module.exports.initializateDynamoClient = newDynamo => {
 	dynamo = newDynamo;
@@ -67,11 +67,11 @@ module.exports.updateItem = (itemId,body) => {
 			itemId
 		},
 		ConditionExpression: 'attribute_exists(itemId)',
-		UpdateExpression: 'set campo=:c, campo1=:c1, campo2=:c2, createdAt=:cAt, updatedAt=:uAt',
+		UpdateExpression: 'set orderNumber=:on, orderDate=:od, endDate=:ed, createdAt=:cAt, updatedAt=:uAt',
 		ExpressionAttributeValues: {
-			":c": body.campo,
-			":c1": body.campo1,
-			":c2": body.campo2,
+			":on": body.orderNumber,
+			":od": body.orderDate,
+			":ed": body.endDate,
 			":cAt": body.createdAt,
 			":uAt": body.updatedAt
 		},
