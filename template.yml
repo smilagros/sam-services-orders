@@ -1,6 +1,6 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Transform: 'AWS::Serverless-2016-10-31'
-Description: A simple backend with a RESTful API endpoint using Amazon API Gateway.
+Description: Services Orders functions.
 Resources:
   serviceorder:
     Type: 'AWS::Serverless::Function'
@@ -20,6 +20,7 @@ Resources:
                 - 'dynamodb:GetItem'
                 - 'dynamodb:PutItem'
                 - 'dynamodb:UpdateItem'
+                - 'dynamodb:Scan'
               Resource:
                 'Fn::Join':
                   - ''
@@ -35,6 +36,11 @@ Resources:
             Path: /serviceorder
             Method: POST
         Api2:
+          Type: Api
+          Properties:
+            Path: /serviceorder
+            Method: GET
+        Api3:
           Type: Api
           Properties:
             Path: /serviceorder/{itemId}

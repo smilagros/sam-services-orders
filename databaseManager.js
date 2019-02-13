@@ -39,6 +39,15 @@ module.exports.getItem = itemId => {
 		});
 };
 
+
+module.exports.getAllItems = () => {
+	const params = {
+		TableName: TABLE_NAME
+	};
+	return dynamo
+		.scan(params).promise();
+};
+
 module.exports.deleteItem = itemId => {
 	const params = {
 		Key: {

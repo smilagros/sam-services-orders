@@ -36,12 +36,21 @@ function saveItem(event, callback) {
 }
 
 function getItem(event, callback) {
-	const itemId = event.pathParameters.itemId;
 
-	databaseManager.getItem(itemId).then(response => {
-		console.log(response);
-		sendResponse(200, JSON.stringify(response), callback);
-	});
+	if(event.pathParameters){
+		const itemId = event.pathParameters.itemId;
+		console.log(itemId);
+		databaseManager.getItem(itemId).then(response => {
+			console.log(response);
+			sendResponse(200, JSON.stringify(response), callback);
+		});
+	}
+	else{
+		databaseManager.getAllItems().then(response => {
+			console.log( "ALL" + response);
+			sendResponse(200, JSON.stringify(response), callback);
+		});
+	}
 }
 
 function deleteItem(event, callback) {
@@ -68,6 +77,9 @@ function updateItem(event, callback) {
 function sendResponse(statusCode, message, callback) {
 	const response = {
 		statusCode: statusCode,
+		headers: { "Access-Control-Allow-Origin": "*",
+			"Access-Control-Allow-Credentials" : true,
+			"Content-Type": "application/json"},
 		body: JSON.stringify(message)
 	};
 	callback(null, response);
